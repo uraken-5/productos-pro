@@ -1,4 +1,7 @@
 FROM openjdk:17-jdk-slim
-VOLUME /tmp
-COPY productos-pro-0.0.1-SNAPSHOT.jar productos-pro-0.0.1-SNAPSHOT.jar
-ENTRYPOINT ["java","-jar","/productos-pro-0.0.1-SNAPSHOT.jar"]
+WORKDIR /app
+COPY pom.xml .
+COPY src src
+RUN mvn package
+EXPOSE 8080
+ENTRYPOINT ["java","-jar","target/productos-pro-0.0.1-SNAPSHOT.jar"]

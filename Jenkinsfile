@@ -10,31 +10,27 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Build on EC2') {
+        stage('Build JAR') {
+            steps {
+                sh 'mvn clean package'
+            }
+        }
+        stage('Build and Push Docker Image') {
             steps {
                 script {
                     sshagent(['new-ssh-key']) {
                         sh '''
                         ssh -o StrictHostKeyChecking=no ec2-user@ec2-98-81-10-115.compute-1.amazonaws.com '
                         cd /home/ec2-user/productos-pro &&
-                        git pull &&
-                        docker build -t productos-pro .'
+                        docker build -t productos-pro .
+                        docker tag productos-pro jcarbalto/productos-pro:latest
+                        docker push jcarbalto/productos-pro:latest'
                         '''
                     }
                 }
             }
         }
-        stage('Push to Docker Hub') {
-            steps {
-                script {
-                    docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials-id') {
-                        sh 'docker tag productos-pro jcarbalto/productos-pro:latest'
-                        sh 'docker push jcarbalto/productos-pro:latest'
-                    }
-                }
-            }
-        }
-        stage('Deploy on EC2') {
+        stage('Deploy to EC2') {
             steps {
                 script {
                     sshagent(['new-ssh-key']) {
@@ -53,8 +49,8 @@ pipeline {
     post {
         always {
             script {
-      			cleanWs() // Now within a script block providing context
-    		}
+                cleanWs()
+            }
         }
     }
 }
