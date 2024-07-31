@@ -15,7 +15,7 @@ pipeline {
 
         stage('Build on EC2') {
             steps {
-                sshagent(['SSH_CREDENTIALS']) {
+                sshagent(['ec2-user-credentials-id']) {
                     sh """
                     ssh -o StrictHostKeyChecking=no ec2-user@c2-98-81-10-115.compute-1.amazonaws.com '
                     cd /home/ec2-user &&
@@ -28,7 +28,7 @@ pipeline {
 
         stage('Push to Docker Hub') {
             steps {
-                sshagent(['SSH_CREDENTIALS']) {
+                sshagent(['ec2-user-credentials-id']) {
                     sh """
                     ssh -o StrictHostKeyChecking=no ec2-user@c2-98-81-10-115.compute-1.amazonaws.com '
                     docker login -u ${DOCKER_HUB_CREDENTIALS_USR} -p ${DOCKER_HUB_CREDENTIALS_PSW} &&
@@ -41,7 +41,7 @@ pipeline {
 
         stage('Deploy on EC2') {
             steps {
-                sshagent(['SSH_CREDENTIALS']) {
+                sshagent(['ec2-user-credentials-id']) {
                     sh """
                     ssh -o StrictHostKeyChecking=no ec2-user@c2-98-81-10-115.compute-1.amazonaws.com '
                     docker pull jcarbalto/productos-pro:latest &&
