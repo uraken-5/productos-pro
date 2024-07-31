@@ -34,7 +34,7 @@ pipeline {
             steps {
                 sshagent(['ec2-user-credentials-id']) {
                     sh """
-                    ssh -o StrictHostKeyChecking=no ec2-user@your-instance-public-dns 'docker pull my-dockerhub-username/my-spring-boot-app:latest && docker stop my-app || true && docker rm my-app || true && docker run -d -p 8080:8080 --name my-app my-dockerhub-username/my-spring-boot-app:latest'
+                    ssh -o StrictHostKeyChecking=no ec2-user@c2-98-81-10-115.compute-1.amazonaws.com 'docker pull jcarbalto/productos-pro:latest && docker stop productos-pro || true && docker rm productos-pro || true && docker run -d -p 8080:8080 --name productos-pro jcarbalto/productos-pro:latest'
                     """
                 }
             }
