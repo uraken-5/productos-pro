@@ -1,7 +1,7 @@
 pipeline {
     // Specify the remote agent with label matching your EC2 node configuration
     agent {
-        label 'my-ec2-node' // Replace with your actual node label
+        label 'EC2-instance' // Replace with your actual node label
     }
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials-id')
