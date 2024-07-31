@@ -17,7 +17,7 @@ pipeline {
             steps {
                 sshagent(['new-ssh-key']) {
                     sh """
-                    ssh -o StrictHostKeyChecking=no ec2-user@c2-98-81-10-115.compute-1.amazonaws.com '
+                    ssh -o StrictHostKeyChecking=no ec2-user@ec2-98-81-10-115.compute-1.amazonaws.com '
                     cd /home/ec2-user &&
                     git pull &&
                     docker build -t productos-pro .'
@@ -30,7 +30,7 @@ pipeline {
             steps {
                 sshagent(['new-ssh-key']) {
                     sh """
-                    ssh -o StrictHostKeyChecking=no ec2-user@c2-98-81-10-115.compute-1.amazonaws.com '
+                    ssh -o StrictHostKeyChecking=no ec2-user@ec2-98-81-10-115.compute-1.amazonaws.com '
                     docker login -u ${DOCKER_HUB_CREDENTIALS_USR} -p ${DOCKER_HUB_CREDENTIALS_PSW} &&
                     docker tag productos-pro jcarbalto/productos-pro:latest &&
                     docker push jcarbalto/productos-pro:latest'
@@ -43,7 +43,7 @@ pipeline {
             steps {
                 sshagent(['new-ssh-key']) {
                     sh """
-                    ssh -o StrictHostKeyChecking=no ec2-user@c2-98-81-10-115.compute-1.amazonaws.com '
+                    ssh -o StrictHostKeyChecking=no ec2-user@ec2-98-81-10-115.compute-1.amazonaws.com '
                     docker pull jcarbalto/productos-pro:latest &&
                     docker stop productos-pro || true &&
                     docker rm productos-pro || true &&
