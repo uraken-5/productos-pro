@@ -1,4 +1,8 @@
 pipeline {
+    agent any
+    tools {
+        maven 'Maven 3.9.8' // Especifica la versión de Maven
+    }
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials-id')
         SSH_CREDENTIALS = credentials('new-ssh-key')
@@ -14,26 +18,18 @@ pipeline {
                 sh 'mvn clean package'
             }
         }
-        stage('Copy JAR to Remote Server (Remote)') {
-            steps {
-                script {
-                    sshagent(['new-ssh-key']) {
-                        sh '''
-                        scp -o StrictHostKeyChecking=no target/productos-pro.jar ec2-user@ec2-54-162-83-59.compute-1.amazonaws.com:/home/ec2-user/productos-pro/
-                        '''
-                    }
-                }
-            }
-        }
         stage('Build and Push Docker Image (Remote)') {
             steps {
                 script {
                     sshagent(['new-ssh-key']) {
                         sh '''
-                        cd /home/ec2-user/productos-pro &&  # Assuming this directory exists on EC2
-                        docker build -t productos-pro .
-                        docker tag productos-pro jcarbalto/productos-pro:latest
+                        ssh -o StrictHostKeyChecking=no ec2-user@ec2-54-162-83-59.compute-1.amazonaws.com '
+                        cd /home/ec2-user/productos-pro &&
+                        git pull &&
+                        docker build -t productos-pro . &&
+                        docker tag productos-pro jcarbalto/productos-pro:latest &&
                         docker push jcarbalto/productos-pro:latest
+                        '
                         '''
                     }
                 }
@@ -44,11 +40,12 @@ pipeline {
                 script {
                     sshagent(['new-ssh-key']) {
                         sh '''
-                        ssh -o StrictHostKeyChecking=no ec2-54-162-83-59.compute-1.amazonaws.com '
+                        ssh -o StrictHostKeyChecking=no ec2-user@ec2-54-162-83-59.compute-1.amazonaws.com '
                         docker stop productos-pro || true &&
                         docker rm productos-pro || true &&
                         docker pull jcarbalto/productos-pro:latest &&
-                        docker run -d -p 8080:8080 --name productos-pro jcarbalto/productos-pro:latest'
+                        docker run -d -p 8080:8080 --name productos-pro jcarbalto/productos-pro:latest
+                        '
                         '''
                     }
                 }
@@ -57,9 +54,7 @@ pipeline {
     }
     post {
         always {
-            script {
-                cleanWs()
-            }
+            cleanWs()
         }
     }
 }
