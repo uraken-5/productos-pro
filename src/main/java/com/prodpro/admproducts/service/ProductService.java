@@ -2,6 +2,8 @@ package com.prodpro.admproducts.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
+
 import com.prodpro.admproducts.dto.ProductCreateDTO;
 import com.prodpro.admproducts.dto.ProductUpdateDTO;
 import com.prodpro.admproducts.exceptionsmanager.exceptions.ProductNotFoundException;
@@ -24,11 +26,18 @@ public class ProductService {
     @Autowired
     private ProductMapper productMapper;
     
+    @Autowired
+    private RestTemplate restTemplate;
+
+    private static final String ESTADISTICAS_URL = "http://localhost:8082/api/estadisticas/registrar?categoria=";
+
+    
     private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
 
     public Product createProduct(ProductCreateDTO productCreateDTO) {
     	Product product = productMapper.toProduct(productCreateDTO);
     	logger.info("Product created with ID: {}", product.getId());
+    	restTemplate.postForObject(ESTADISTICAS_URL + product.getCategory(), null, Void.class);
         return productRepository.save(product);
     }
 

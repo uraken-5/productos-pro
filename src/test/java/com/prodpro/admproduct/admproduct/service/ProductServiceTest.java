@@ -8,6 +8,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.web.client.RestTemplate;
 
 import com.prodpro.admproducts.ProductosProApplication;
 import com.prodpro.admproducts.dto.ProductCreateDTO;
@@ -33,9 +34,14 @@ public class ProductServiceTest {
 
     @Mock
     private ProductMapper productMapper;
+    
+    @Mock
+    private RestTemplate restTemplate;
 
     @InjectMocks
     private ProductService productService;
+    
+    private static final String ESTADISTICAS_URL = "http://localhost:8082/api/estadisticas/registrar?categoria=";
 
     @BeforeEach
     public void setUp() {
@@ -58,6 +64,10 @@ public class ProductServiceTest {
 
         when(productMapper.toProduct(any(ProductCreateDTO.class))).thenReturn(product);
         when(productRepository.save(any(Product.class))).thenReturn(product);
+        
+     // Simular la llamada a RestTemplate
+        when(restTemplate.postForObject(eq(ESTADISTICAS_URL + createDTO.getCategory()), isNull(), eq(Void.class))).thenReturn(null);
+
 
         Product createdProduct = productService.createProduct(createDTO);
 
