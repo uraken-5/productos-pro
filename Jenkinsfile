@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials-id')
-        SSH_CREDENTIALS = credentials('ssh-credentials-id')
+        SSH_CREDENTIALS = credentials('new-ssh-key')
     }
     stages {
         stage('Checkout SCM') {
@@ -13,7 +13,7 @@ pipeline {
         stage('Build on EC2') {
             steps {
                 script {
-                    sshagent(['ssh-credentials-id']) {
+                    sshagent(['new-ssh-key']) {
                         sh '''
                         ssh -o StrictHostKeyChecking=no ec2-user@ec2-98-81-10-115.compute-1.amazonaws.com '
                         cd /home/ec2-user/productos-pro &&
@@ -37,7 +37,7 @@ pipeline {
         stage('Deploy on EC2') {
             steps {
                 script {
-                    sshagent(['ssh-credentials-id']) {
+                    sshagent(['new-ssh-key']) {
                         sh '''
                         ssh -o StrictHostKeyChecking=no ec2-user@ec2-98-81-10-115.compute-1.amazonaws.com '
                         docker stop productos-pro || true &&
