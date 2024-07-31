@@ -1,5 +1,8 @@
 pipeline {
-    agent any
+    // Specify the remote agent with label matching your EC2 node configuration
+    agent {
+        label 'my-ec2-node' // Replace with your actual node label
+    }
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials-id')
         SSH_CREDENTIALS = credentials('new-ssh-key')
@@ -10,27 +13,26 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Build JAR') {
+        stage('Build JAR (Local)') {
             steps {
                 sh 'mvn clean package'
             }
         }
-        stage('Build and Push Docker Image') {
+        stage('Build and Push Docker Image (Remote)') {
             steps {
                 script {
                     sshagent(['new-ssh-key']) {
                         sh '''
-                        ssh -o StrictHostKeyChecking=no ec2-user@ec2-98-81-10-115.compute-1.amazonaws.com '
-                        cd /home/ec2-user/productos-pro &&
+                        cd /home/ec2-user/productos-pro &&  # Assuming this directory exists on EC2
                         docker build -t productos-pro .
                         docker tag productos-pro jcarbalto/productos-pro:latest
-                        docker push jcarbalto/productos-pro:latest'
+                        docker push jcarbalto/productos-pro:latest
                         '''
                     }
                 }
             }
         }
-        stage('Deploy to EC2') {
+        stage('Deploy to EC2 (Remote)') {
             steps {
                 script {
                     sshagent(['new-ssh-key']) {
