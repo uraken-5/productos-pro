@@ -11,11 +11,6 @@ pipeline {
             }
         }
         stage('Build on EC2') {
-            agent {
-                node {
-                    label 'your-node-label'
-                }
-            }
             steps {
                 sshagent(['ssh-credentials-id']) {
                     sh '''
