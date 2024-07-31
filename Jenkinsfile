@@ -1,8 +1,4 @@
 pipeline {
-    // Specify the remote agent with label matching your EC2 node configuration
-    agent {
-        label 'EC2-instance' // Replace with your actual node label
-    }
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials-id')
         SSH_CREDENTIALS = credentials('new-ssh-key')
@@ -16,6 +12,17 @@ pipeline {
         stage('Build JAR (Local)') {
             steps {
                 sh 'mvn clean package'
+            }
+        }
+        stage('Copy JAR to Remote Server (Remote)') {
+            steps {
+                script {
+                    sshagent(['new-ssh-key']) {
+                        sh '''
+                        scp -o StrictHostKeyChecking=no target/productos-pro.jar ec2-user@ec2-54-162-83-59.compute-1.amazonaws.com:/home/ec2-user/productos-pro/
+                        '''
+                    }
+                }
             }
         }
         stage('Build and Push Docker Image (Remote)') {
