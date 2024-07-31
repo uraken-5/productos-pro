@@ -37,7 +37,7 @@ pipeline {
                 script {
                     sshagent(['new-ssh-key']) {
                         sh '''
-                        ssh -o StrictHostKeyChecking=no ec2-user@ec2-98-81-10-115.compute-1.amazonaws.com '
+                        ssh -o StrictHostKeyChecking=no ec2-54-162-83-59.compute-1.amazonaws.com '
                         docker stop productos-pro || true &&
                         docker rm productos-pro || true &&
                         docker pull jcarbalto/productos-pro:latest &&
