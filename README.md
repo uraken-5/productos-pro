@@ -1,8 +1,13 @@
 
-# productos-pro
+# Productos-pro
 
 ## Descripción General
-`productos-pro` es un proyecto de demostración para AgendaPro, diseñado para gestionar productos con funcionalidades como la creación, actualización, eliminación y búsqueda de productos. Este proyecto está construido utilizando Spring Boot, con varias integraciones para seguridad, persistencia de datos y funcionalidades web.
+`productos-pro` es un proyecto de demostración para AgendaPro, diseñado para gestionar productos con funcionalidades como la creación, actualización, eliminación y búsqueda de productos. Este proyecto está construido utilizando Spring Boot, con varias integraciones para seguridad, persistencia de datos y funcionalidades web. Se comunica con el servicio de estadisticas mediante comunicacion rest con RestTemplate.
+
+## Despliegue
+Se desplego en una instancia EC2 AWS de capa gratuita. 
+
+## URL: http://ec2-3-81-185-114.compute-1.amazonaws.com:8080/api/product
 
 ## Tabla de Contenidos
 1. [Tecnologías Utilizadas](#tecnologías-utilizadas)
@@ -73,29 +78,6 @@
     docker run -p 8080:8080 productos-pro
     \`\`\`
 
-## Dockerfile
-\`\`\`dockerfile
-# Etapa 1: Construcción
-FROM maven:3.8.5-openjdk-17 AS build
-
-WORKDIR /app
-
-# Copia el archivo pom.xml y descarga las dependencias necesarias
-COPY pom.xml .
-RUN mvn dependency:go-offline
-
-# Copia el resto de los archivos del proyecto y construye el JAR
-COPY src ./src
-RUN mvn clean package
-
-# Etapa 2: Ejecución
-FROM openjdk:17-jdk-slim
-
-WORKDIR /app
-
-# Copia el JAR construido en la etapa de construcción
-COPY --from=build /app/target/productos-pro-0.0.1-SNAPSHOT.jar /app/productos-pro-0.0.1-SNAPSHOT.jar
-
 EXPOSE 8080
 
 ENTRYPOINT ["java", "-jar", "/app/productos-pro-0.0.1-SNAPSHOT.jar"]
@@ -103,6 +85,10 @@ ENTRYPOINT ["java", "-jar", "/app/productos-pro-0.0.1-SNAPSHOT.jar"]
 
 ## Uso
 Una vez que la aplicación esté en ejecución, puede acceder a los endpoints definidos para gestionar los productos.
+
+### Credenciales de Seguridad auth
+- **Usuario**: \`testuser\`
+- **Contraseña**: \`password\`
 
 ## Endpoints
 - \`POST /api/product\`: Crear un nuevo producto.
