@@ -1,7 +1,7 @@
 pipeline {
     agent any
     tools {
-        maven 'Maven 3.9.8' // Especifica la versión de Maven
+        maven 'Maven 3.9.8' // Ajusta según tu configuración de Maven en Jenkins
     }
     environment {
         DOCKER_HUB_CREDENTIALS = credentials('docker-hub-credentials-id')
@@ -13,37 +13,32 @@ pipeline {
                 checkout scm
             }
         }
-        stage('Build JAR (Local)') {
+        stage('Build JAR and Docker Image') {
             steps {
                 sh 'mvn clean package'
+                sh 'docker build -t productos-pro .'
             }
         }
-        stage('Build and Push Docker Image (Remote)') {
+        stage('Push Docker Image') {
             steps {
                 script {
-                    sshagent(['new-ssh-key']) {
-                        sh '''
-                        ssh -o StrictHostKeyChecking=no ec2-user@ec2-54-162-83-59.compute-1.amazonaws.com '
-                        cd /home/ec2-user/productos-pro &&
-                        git pull &&
-                        docker build -t productos-pro . &&
-                        docker tag productos-pro jcarbalto/productos-pro:latest &&
-                        docker push jcarbalto/productos-pro:latest
-                        '
-                        '''
+                    docker.withRegistry('https://index.docker.io/v1/', 'docker-hub-credentials-id') {
+                        sh 'docker tag productos-pro jcarbalto/productos-pro:latest'
+                        sh 'docker push jcarbalto/productos-pro:latest'
                     }
                 }
             }
         }
-        stage('Deploy to EC2 (Remote)') {
+        stage('Copy JAR to EC2 and Deploy') {
             steps {
                 script {
                     sshagent(['new-ssh-key']) {
                         sh '''
-                        ssh -o StrictHostKeyChecking=no ec2-user@ec2-54-162-83-59.compute-1.amazonaws.com '
+                        scp -o StrictHostKeyChecking=no target/productos-pro-0.0.1-SNAPSHOT.jar ec2-user@ec2-54-196-118-142.compute-1.amazonaws.com:/home/ec2-user/
+                        ssh -o StrictHostKeyChecking=no ec2-user@ec2-54-196-118-142.compute-1.amazonaws.com '
+                        docker pull jcarbalto/productos-pro:latest &&
                         docker stop productos-pro || true &&
                         docker rm productos-pro || true &&
-                        docker pull jcarbalto/productos-pro:latest &&
                         docker run -d -p 8080:8080 --name productos-pro jcarbalto/productos-pro:latest
                         '
                         '''
