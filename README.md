@@ -30,29 +30,6 @@
 - **Maven**
 - **Docker**
 
-## Estructura del Proyecto
-\`\`\`plaintext
-src/main/java/com/prodpro/admproducts
-├── config
-│   ├── RestTemplateConfig.java
-│   └── SecurityConfig.java
-├── controller
-│   └── ProductController.java
-├── exceptionsmanager
-│   ├── GlobalExceptionHandler.java
-│   └── exceptions
-│       ├── ErrorDetails.java
-│       ├── GeneralException.java
-│       └── ProductNotFoundException.java
-├── mapper
-│   └── ProductMapper.java
-├── model
-│   └── Product.java
-├── repository
-│   └── ProductRepository.java
-└── service
-    └── ProductService.java
-\`\`\`
 
 ## Características Clave
 - **Gestión de Productos**: Crear, actualizar, eliminar y buscar productos.
@@ -60,12 +37,8 @@ src/main/java/com/prodpro/admproducts
 - **Persistencia de Datos**: Uso de JPA y base de datos H2 para almacenamiento de datos.
 - **Manejo de Excepciones**: Manejo centralizado de excepciones mediante `GlobalExceptionHandler`.
 
-## Arquitectura
-El diagrama de arquitectura a continuación muestra los componentes principales y su interacción:
 
-![Arquitectura](./docs/arquitectura.png)
-
-### Descripción del Diagrama
+### Descripción de capas
 1. **Controlador (`ProductController`)**: Gestiona las solicitudes HTTP y coordina con el servicio de productos.
 2. **Servicio (`ProductService`)**: Contiene la lógica de negocio para la gestión de productos.
 3. **Repositorio (`ProductRepository`)**: Interactúa con la base de datos para las operaciones CRUD.
@@ -145,13 +118,3 @@ El proyecto incluye un manejo centralizado de excepciones utilizando `GlobalExce
 - \`GeneralException\`
 - Excepciones generales (\`Exception\`)
 
-## Contribuciones
-Las contribuciones son bienvenidas. Por favor, siga estos pasos:
-1. Haga un fork del repositorio.
-2. Cree una rama para su característica (\`git checkout -b feature/nueva-caracteristica\`).
-3. Realice un commit de sus cambios (\`git commit -am 'Añadir nueva característica'\`).
-4. Haga push a la rama (\`git push origin feature/nueva-caracteristica\`).
-5. Cree un nuevo Pull Request.
-
-## Licencia
-Este proyecto está licenciado bajo la Licencia MIT - vea el archivo [LICENSE](LICENSE) para más detalles.
