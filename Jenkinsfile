@@ -52,7 +52,9 @@ pipeline {
     }
     post {
         always {
-            cleanWs()
+            script {
+      			cleanWs() // Now within a script block providing context
+    		}
         }
     }
 }
