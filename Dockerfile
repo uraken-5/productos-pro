@@ -1,16 +1,13 @@
-FROM openjdk:17-jdk-slim
-
-# Instala Maven
-RUN apt-get update && apt-get install -y maven
-
+# Etapa 1: Construcción de la aplicación
+FROM maven:3.8.1-openjdk-17 AS build
 WORKDIR /app
-
 COPY pom.xml .
-COPY src src
+COPY src ./src
+RUN mvn clean package
 
-# Construye el proyecto usando Maven
-RUN mvn package
-
+# Etapa 2: Crear la imagen final
+FROM openjdk:17-jdk-slim
+WORKDIR /app
+COPY --from=build /app/target/productos-pro-0.0.1-SNAPSHOT.jar productos-pro-0.0.1-SNAPSHOT.jar
 EXPOSE 8080
-
-ENTRYPOINT ["java","-jar","target/productos-pro-0.0.1-SNAPSHOT.jar"]
+ENTRYPOINT ["java", "-jar", "productos-pro-0.0.1-SNAPSHOT.jar"]
