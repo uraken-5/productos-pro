@@ -29,7 +29,7 @@ public class ProductService {
     @Autowired
     private RestTemplate restTemplate;
 
-    private static final String ESTADISTICAS_URL = "http://localhost:8082/api/estadisticas/registrar?categoria=";
+    private static final String ESTADISTICAS_URL = "http://ec2-35-171-82-107.compute-1.amazonaws.com:8082/api/estadisticas/registrar?categoria=";
 
     
     private static final Logger logger = LoggerFactory.getLogger(ProductService.class);
