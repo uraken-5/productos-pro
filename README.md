@@ -51,7 +51,7 @@ Se desplego en una instancia EC2 AWS de capa gratuita. Para probar endpoint se i
 ## Configuración e Instalación
 1. Clonar el repositorio:
     \`\`\`bash
-    git clone https://github.com/tu_usuario/productos-pro.git
+    git clone [https://github.com/tu_usuario/productos-pro.git](https://github.com/uraken-5/productos-pro.git)
     \`\`\`
 2. Navegar al directorio del proyecto:
     \`\`\`bash
