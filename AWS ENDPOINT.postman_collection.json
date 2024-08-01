@@ -1,0 +1,322 @@
+{
+	"info": {
+		"_postman_id": "4fe1c63d-c4f5-4120-9959-c43ec41667a4",
+		"name": "AWS ENDPOINT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "482347"
+	},
+	"item": [
+		{
+			"name": "createProductaws",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "testuser",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n        \"name\": \"vasos\",\n        \"category\": \"thinks\",\n        \"unitPrice\": 22000.0,\n        \"stock\": 10000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://ec2-35-171-82-107.compute-1.amazonaws.com:8080/api/product",
+					"protocol": "http",
+					"host": [
+						"ec2-35-171-82-107",
+						"compute-1",
+						"amazonaws",
+						"com"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "get-estadisticaaws",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "1234",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "estadisticas",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://ec2-3-81-185-114.compute-1.amazonaws.com:8082/api/estadisticas?categoria=thilolo",
+					"protocol": "http",
+					"host": [
+						"ec2-3-81-185-114",
+						"compute-1",
+						"amazonaws",
+						"com"
+					],
+					"port": "8082",
+					"path": [
+						"api",
+						"estadisticas"
+					],
+					"query": [
+						{
+							"key": "categoria",
+							"value": "thilolo"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProductsByIdaws",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "testuser",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://ec2-35-171-82-107.compute-1.amazonaws.com:8080/api/product/1",
+					"protocol": "http",
+					"host": [
+						"ec2-35-171-82-107",
+						"compute-1",
+						"amazonaws",
+						"com"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"product",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getProductByNameaws",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "testuser",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://ec2-35-171-82-107.compute-1.amazonaws.com:8080/api/product/search?nombre=vasos",
+					"protocol": "http",
+					"host": [
+						"ec2-35-171-82-107",
+						"compute-1",
+						"amazonaws",
+						"com"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"product",
+						"search"
+					],
+					"query": [
+						{
+							"key": "nombre",
+							"value": "vasos"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "getListProductaws",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "testuser",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"name\":\"car\",\n    \"category\":\"vehicles\",\n    \"unitPrice\":20000,\n    \"stock\":23000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://ec2-35-171-82-107.compute-1.amazonaws.com:8080/api/product",
+					"protocol": "http",
+					"host": [
+						"ec2-35-171-82-107",
+						"compute-1",
+						"amazonaws",
+						"com"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"product"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "updateProductaws",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "testuser",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": " {\n        \"name\": \"clock-update\",\n        \"category\": \"thinks\",\n        \"unitPrice\": 22000.0,\n        \"stock\": 10000\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://ec2-35-171-82-107.compute-1.amazonaws.com:8080/api/product/1",
+					"protocol": "http",
+					"host": [
+						"ec2-35-171-82-107",
+						"compute-1",
+						"amazonaws",
+						"com"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"product",
+						"1"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "deleteProductaws",
+			"request": {
+				"auth": {
+					"type": "basic",
+					"basic": [
+						{
+							"key": "password",
+							"value": "password",
+							"type": "string"
+						},
+						{
+							"key": "username",
+							"value": "testuser",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "http://ec2-35-171-82-107.compute-1.amazonaws.com:8080/api/product/1",
+					"protocol": "http",
+					"host": [
+						"ec2-35-171-82-107",
+						"compute-1",
+						"amazonaws",
+						"com"
+					],
+					"port": "8080",
+					"path": [
+						"api",
+						"product",
+						"1"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
