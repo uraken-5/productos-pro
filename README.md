@@ -5,9 +5,7 @@
 `productos-pro` es un proyecto de demostración para AgendaPro, diseñado para gestionar productos con funcionalidades como la creación, actualización, eliminación y búsqueda de productos. Este proyecto está construido utilizando Spring Boot, con varias integraciones para seguridad, persistencia de datos y funcionalidades web. Se comunica con el servicio de estadisticas mediante comunicacion rest con RestTemplate.
 
 ## Despliegue
-Se desplego en una instancia EC2 AWS de capa gratuita. 
-
-## URL: http://ec2-3-81-185-114.compute-1.amazonaws.com:8080/api/product
+Se desplego en una instancia EC2 AWS de capa gratuita. Para probar endpoint se incluye en la raiz del proyecto el archivo AWS ENDPOINT.postman_collection.json
 
 ## Tabla de Contenidos
 1. [Tecnologías Utilizadas](#tecnologías-utilizadas)
