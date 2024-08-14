@@ -1,5 +1,5 @@
 
-# Productos-pro
+# Productos-pro-2024
 
 ## Descripción General
 `productos-pro` es un proyecto de demostración para AgendaPro, diseñado para gestionar productos con funcionalidades como la creación, actualización, eliminación y búsqueda de productos. Este proyecto está construido utilizando Spring Boot, con varias integraciones para seguridad, persistencia de datos y funcionalidades web. Se comunica con el servicio de estadisticas mediante comunicacion rest con RestTemplate.
