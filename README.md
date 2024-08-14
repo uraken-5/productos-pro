@@ -102,3 +102,5 @@ El proyecto incluye un manejo centralizado de excepciones utilizando `GlobalExce
 - \`GeneralException\`
 - Excepciones generales (\`Exception\`)
 
+## Francisco estubo aquí
+- No tengo idea que estoy haciendo, saludos
